@@ -13,9 +13,13 @@
 		82F411052E36130F00DFD5A4 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411042E36130F00DFD5A4 /* FirebaseCore */; };
 		82F411072E36130F00DFD5A4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411062E36130F00DFD5A4 /* FirebaseDatabase */; };
 		82F411092E36137A00DFD5A4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411082E36137A00DFD5A4 /* FirebaseAnalytics */; };
+		DB77460003C6C926693AB302 /* Pods_StormChaser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE7AAE6B4F047B28D39A1DB /* Pods_StormChaser.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184E1147CC4617CD293D0145 /* Pods-StormChaser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StormChaser.debug.xcconfig"; path = "Target Support Files/Pods-StormChaser/Pods-StormChaser.debug.xcconfig"; sourceTree = "<group>"; };
+		1926C2FBB5195C7D0CA1FA92 /* Pods-StormChaser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StormChaser.release.xcconfig"; path = "Target Support Files/Pods-StormChaser/Pods-StormChaser.release.xcconfig"; sourceTree = "<group>"; };
+		7AE7AAE6B4F047B28D39A1DB /* Pods_StormChaser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StormChaser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82A184D92E3609280006410C /* StormChaser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StormChaser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -51,6 +55,7 @@
 				82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */,
 				82F411052E36130F00DFD5A4 /* FirebaseCore in Frameworks */,
 				82F410FF2E36129700DFD5A4 /* GoogleSignInSwift in Frameworks */,
+				DB77460003C6C926693AB302 /* Pods_StormChaser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +68,7 @@
 				82A184DB2E3609280006410C /* StormChaser */,
 				82F411012E36130F00DFD5A4 /* Frameworks */,
 				82A184DA2E3609280006410C /* Products */,
+				B7DA721AC6FB04EBBA43951E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,8 +83,18 @@
 		82F411012E36130F00DFD5A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7AE7AAE6B4F047B28D39A1DB /* Pods_StormChaser.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7DA721AC6FB04EBBA43951E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				184E1147CC4617CD293D0145 /* Pods-StormChaser.debug.xcconfig */,
+				1926C2FBB5195C7D0CA1FA92 /* Pods-StormChaser.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82A184EF2E3609290006410C /* Build configuration list for PBXNativeTarget "StormChaser" */;
 			buildPhases = (
+				EA35DA460DBF8B66F566DB1F /* [CP] Check Pods Manifest.lock */,
 				82A184D52E3609280006410C /* Sources */,
 				82A184D62E3609280006410C /* Frameworks */,
 				82A184D72E3609280006410C /* Resources */,
+				5511D38676AF7DD67749966F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +178,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5511D38676AF7DD67749966F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StormChaser/Pods-StormChaser-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StormChaser/Pods-StormChaser-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StormChaser/Pods-StormChaser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA35DA460DBF8B66F566DB1F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StormChaser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		82A184D52E3609280006410C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -173,12 +233,14 @@
 /* Begin XCBuildConfiguration section */
 		82A184F02E3609290006410C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 184E1147CC4617CD293D0145 /* Pods-StormChaser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KUC72Q99P8;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StormChaser/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -201,12 +263,14 @@
 		};
 		82A184F12E3609290006410C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1926C2FBB5195C7D0CA1FA92 /* Pods-StormChaser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KUC72Q99P8;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StormChaser/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

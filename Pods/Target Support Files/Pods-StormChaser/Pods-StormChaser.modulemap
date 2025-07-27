@@ -1,0 +1,6 @@
+framework module Pods_StormChaser {
+  umbrella header "Pods-StormChaser-umbrella.h"
+
+  export *
+  module * { export * }
+}
