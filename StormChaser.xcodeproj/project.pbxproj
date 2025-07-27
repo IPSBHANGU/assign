@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FC2E36129700DFD5A4 /* GoogleSignIn */; };
+		82F410FF2E36129700DFD5A4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FE2E36129700DFD5A4 /* GoogleSignInSwift */; };
+		82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411022E36130F00DFD5A4 /* FirebaseAuth */; };
+		82F411052E36130F00DFD5A4 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411042E36130F00DFD5A4 /* FirebaseCore */; };
+		82F411072E36130F00DFD5A4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411062E36130F00DFD5A4 /* FirebaseDatabase */; };
+		82F411092E36137A00DFD5A4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411082E36137A00DFD5A4 /* FirebaseAnalytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		82A184D92E3609280006410C /* StormChaser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StormChaser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -14,7 +23,7 @@
 		82A184EE2E3609290006410C /* Exceptions for "StormChaser" folder in "StormChaser" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = 82A184D82E3609280006410C /* StormChaser */;
 		};
@@ -36,6 +45,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82F411072E36130F00DFD5A4 /* FirebaseDatabase in Frameworks */,
+				82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */,
+				82F411092E36137A00DFD5A4 /* FirebaseAnalytics in Frameworks */,
+				82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */,
+				82F411052E36130F00DFD5A4 /* FirebaseCore in Frameworks */,
+				82F410FF2E36129700DFD5A4 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				82A184DB2E3609280006410C /* StormChaser */,
+				82F411012E36130F00DFD5A4 /* Frameworks */,
 				82A184DA2E3609280006410C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +72,13 @@
 				82A184D92E3609280006410C /* StormChaser.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		82F411012E36130F00DFD5A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,6 +101,12 @@
 			);
 			name = StormChaser;
 			packageProductDependencies = (
+				82F410FC2E36129700DFD5A4 /* GoogleSignIn */,
+				82F410FE2E36129700DFD5A4 /* GoogleSignInSwift */,
+				82F411022E36130F00DFD5A4 /* FirebaseAuth */,
+				82F411042E36130F00DFD5A4 /* FirebaseCore */,
+				82F411062E36130F00DFD5A4 /* FirebaseDatabase */,
+				82F411082E36137A00DFD5A4 /* FirebaseAnalytics */,
 			);
 			productName = StormChaser;
 			productReference = 82A184D92E3609280006410C /* StormChaser.app */;
@@ -107,6 +136,10 @@
 			);
 			mainGroup = 82A184D02E3609280006410C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 82A184DA2E3609280006410C /* Products */;
 			projectDirPath = "";
@@ -147,7 +180,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KUC72Q99P8;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = StormChaser/Info.plist;
+				INFOPLIST_FILE = StormChaser/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -175,7 +208,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KUC72Q99P8;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = StormChaser/Info.plist;
+				INFOPLIST_FILE = StormChaser/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -335,6 +368,58 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		82F410FC2E36129700DFD5A4 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		82F410FE2E36129700DFD5A4 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		82F411022E36130F00DFD5A4 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		82F411042E36130F00DFD5A4 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		82F411062E36130F00DFD5A4 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		82F411082E36137A00DFD5A4 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 82A184D12E3609280006410C /* Project object */;
 }
