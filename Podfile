@@ -6,5 +6,6 @@ target 'StormChaser' do
   use_frameworks!
 
   # Pods for StormChaser
-pod 'NVActivityIndicatorView'
+pod "Kingfisher"
+pod 'GrowingTextView', '0.7.2'
 end

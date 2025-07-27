@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		827649682E363C0A0028CE18 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 827649672E363C0A0028CE18 /* OpenMeteoSdk */; };
 		82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FC2E36129700DFD5A4 /* GoogleSignIn */; };
 		82F410FF2E36129700DFD5A4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FE2E36129700DFD5A4 /* GoogleSignInSwift */; };
 		82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 82F411022E36130F00DFD5A4 /* FirebaseAuth */; };
@@ -51,6 +52,7 @@
 			files = (
 				82F411072E36130F00DFD5A4 /* FirebaseDatabase in Frameworks */,
 				82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */,
+				827649682E363C0A0028CE18 /* OpenMeteoSdk in Frameworks */,
 				82F411092E36137A00DFD5A4 /* FirebaseAnalytics in Frameworks */,
 				82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */,
 				82F411052E36130F00DFD5A4 /* FirebaseCore in Frameworks */,
@@ -125,6 +127,7 @@
 				82F411042E36130F00DFD5A4 /* FirebaseCore */,
 				82F411062E36130F00DFD5A4 /* FirebaseDatabase */,
 				82F411082E36137A00DFD5A4 /* FirebaseAnalytics */,
+				827649672E363C0A0028CE18 /* OpenMeteoSdk */,
 			);
 			productName = StormChaser;
 			productReference = 82A184D92E3609280006410C /* StormChaser.app */;
@@ -157,6 +160,7 @@
 			packageReferences = (
 				82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				827649662E363C0A0028CE18 /* XCRemoteSwiftPackageReference "sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 82A184DA2E3609280006410C /* Products */;
@@ -187,9 +191,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StormChaser/Pods-StormChaser-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StormChaser/Pods-StormChaser-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,6 +442,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		827649662E363C0A0028CE18 /* XCRemoteSwiftPackageReference "sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/open-meteo/sdk.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -453,6 +469,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		827649672E363C0A0028CE18 /* OpenMeteoSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 827649662E363C0A0028CE18 /* XCRemoteSwiftPackageReference "sdk" */;
+			productName = OpenMeteoSdk;
+		};
 		82F410FC2E36129700DFD5A4 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 82F410FB2E36129700DFD5A4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
