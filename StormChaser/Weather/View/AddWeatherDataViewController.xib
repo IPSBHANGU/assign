@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddWeatherDataViewController">
             <connections>
                 <outlet property="cityLabel" destination="4" id="Q1f-sp-5gh"/>
-                <outlet property="imageView" destination="KZ8-hO-7Ey" id="3Du-kx-BdZ"/>
+                <outlet property="imageView" destination="KZ8-hO-7Ey" id="zax-9Q-rqi"/>
                 <outlet property="noteTextView" destination="YEh-oz-bUS" id="7lf-pE-9Ww"/>
                 <outlet property="precipitationLable" destination="wcr-lL-w4h" id="eLt-RH-7qY"/>
                 <outlet property="scrollView" destination="2" id="DcJ-lI-c2w"/>
@@ -96,8 +96,8 @@
                                         <constraint firstItem="WVq-91-pnm" firstAttribute="top" secondItem="DNk-Ic-RaG" secondAttribute="bottom" constant="20" id="zXM-cJ-J4v"/>
                                     </constraints>
                                 </view>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KZ8-hO-7Ey">
-                                    <rect key="frame" x="125" y="488" width="50" height="47.666666666666742"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KZ8-hO-7Ey" customClass="CustomImageView" customModule="StormChaser" customModuleProvider="target">
+                                    <rect key="frame" x="125" y="487" width="50" height="50"/>
                                     <color key="tintColor" systemColor="secondaryLabelColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="APW-XO-3tP"/>
@@ -219,7 +219,6 @@
         </view>
     </objects>
     <resources>
-        <image name="camera" catalog="system" width="128" height="93"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

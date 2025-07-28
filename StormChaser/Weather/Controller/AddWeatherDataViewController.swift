@@ -22,7 +22,7 @@ class AddWeatherDataViewController: UIViewController {
     @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var weatherDescriptionLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: CustomImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var noteTextView: GrowingTextView!
     @IBOutlet weak var submitButton: UIButton!
@@ -41,6 +41,7 @@ class AddWeatherDataViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
+        self.tabBarController?.setTabBarHidden(true, animated: true)
         // Do any additional setup after loading the view.
         setupUI()
         setupLocationManager()
@@ -76,6 +77,7 @@ class AddWeatherDataViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.addGestureRecognizer(tap)
+        imageView.images = images
     }
     
     func setupTextView() {
@@ -110,6 +112,7 @@ class AddWeatherDataViewController: UIViewController {
 
     
     @IBAction func backButtonAction(_ sender: Any) {
+        self.tabBarController?.setTabBarHidden(false, animated: true)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -263,6 +266,7 @@ extension AddWeatherDataViewController: PhotoGalleryViewControllerDelegate {
     func photoGallery(_ controller: PhotoGalleryViewController, didFinishPicking images: [UIImage]) {
         print(images.count)
         self.images.append(contentsOf: images)
+        self.imageView.images = images
     }
     
 }

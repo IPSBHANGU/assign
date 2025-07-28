@@ -52,7 +52,6 @@ class ListViewController: UIViewController {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-    
         tableView.register(UINib(nibName: "WeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "weatherCell")
     }
     
@@ -92,11 +91,14 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let condition = ConditionType.from(weatherCode: weatherData.weatherData.hourly.weatherCode[indexOfClosestDate(to: now, in: weatherData.weatherData.hourly.time)])
         cell.setupCell(image: weatherData.images.first ?? defaultImage!, location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
         
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let listWeatherVC = ListWeatherViewController()
+        listWeatherVC.weatherData = availableWeatherData[indexPath.row]
+        self.navigationController?.pushViewController(listWeatherVC, animated: true)
     }
     
 }

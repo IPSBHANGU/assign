@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func logoutButtonAction() {
-        MatrialAlertView().showAlert(viewController: self, title: "Log out", message: "Are you sure you want to log out? You'll need to login again to use the app.", actions: [MaterialAlertAction(title: "Yes", titleColor: .white, backgroundColor: .red, handler: {
+        MatrialAlertView().showAlert(viewController: self, title: "Log out", message: "Are you sure you want to log out? You'll need to login again to use the app.", actions: [MaterialAlertAction(title: "Yes", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
             GoogleAuth().signOUT { isSucceeded, error in
                 if let error = error {
                     MatrialAlertView().showAlert(viewController: self, title: "Error", message: error, actions: [MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
