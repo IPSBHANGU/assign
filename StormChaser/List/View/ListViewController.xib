@@ -10,7 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListViewController" customModule="StormChaser" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="MrL-Wt-aoK" id="pDB-Ll-5fi"/>
+                <outlet property="addButton" destination="oSl-lq-CpJ" id="oKH-Xa-vJ2"/>
+                <outlet property="tableView" destination="150-rM-eoh" id="jU5-M5-dGH"/>
                 <outlet property="titleLabel" destination="G9n-yq-xZ0" id="Q6v-uf-yNh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9n-yq-xZ0">
-                    <rect key="frame" x="100" y="70" width="193" height="56"/>
+                    <rect key="frame" x="20" y="70" width="119" height="56"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="77k-hB-yQ1"/>
                     </constraints>
@@ -29,32 +30,44 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="MrL-Wt-aoK">
-                    <rect key="frame" x="0.0" y="166" width="393" height="618"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSl-lq-CpJ">
+                    <rect key="frame" x="333" y="80" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="OeT-RK-HUV"/>
+                        <constraint firstAttribute="width" constant="40" id="oZw-0t-QjW"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
+                    <connections>
+                        <action selector="addButtonAction:" destination="-1" eventType="touchUpInside" id="0J7-Qb-Mg4"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="150-rM-eoh">
+                    <rect key="frame" x="20" y="146" width="353" height="638"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6FP-DB-a7x">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="G9n-yq-xZ0" secondAttribute="trailing" constant="100" id="0d3-87-YSA"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="MrL-Wt-aoK" secondAttribute="bottom" id="BAT-Zb-Z38"/>
-                <constraint firstItem="G9n-yq-xZ0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="100" id="Bfs-TE-hKT"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MrL-Wt-aoK" secondAttribute="trailing" id="HXs-NY-Rf2"/>
+                <constraint firstItem="G9n-yq-xZ0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Bfs-TE-hKT"/>
                 <constraint firstItem="G9n-yq-xZ0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="HdQ-dO-Wo2"/>
-                <constraint firstItem="MrL-Wt-aoK" firstAttribute="top" secondItem="G9n-yq-xZ0" secondAttribute="bottom" constant="40" id="Q7J-KJ-kDs"/>
-                <constraint firstItem="MrL-Wt-aoK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gPk-fs-PWy"/>
+                <constraint firstItem="oSl-lq-CpJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="RN2-4a-c4g"/>
+                <constraint firstItem="150-rM-eoh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="X3h-0J-IaL"/>
+                <constraint firstItem="150-rM-eoh" firstAttribute="top" secondItem="G9n-yq-xZ0" secondAttribute="bottom" constant="20" id="aaj-RV-iS4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="150-rM-eoh" secondAttribute="trailing" constant="20" id="bB4-uA-9ep"/>
+                <constraint firstAttribute="trailing" secondItem="oSl-lq-CpJ" secondAttribute="trailing" constant="20" id="sMN-lg-Aap"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="150-rM-eoh" secondAttribute="bottom" id="xJ7-tq-ECa"/>
             </constraints>
             <point key="canvasLocation" x="63" y="20"/>
         </view>
     </objects>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

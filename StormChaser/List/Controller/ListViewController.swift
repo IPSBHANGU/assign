@@ -11,15 +11,15 @@ class ListViewController: UIViewController {
 
     // MARK: UIElements
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     var availableWeatherData: [WeatherEntryModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
-        setupCollectionView()
+        setupTableView()
     }
     
     override func viewIsAppearing(_ animated: Bool) {
@@ -29,7 +29,7 @@ class ListViewController: UIViewController {
     }
 
     func setupUI(){
-       titleLabel.font = UIFont(name: "Rubik-SemiBold", size: 18)
+       titleLabel.font = UIFont(name: "Rubik-SemiBold", size: 32)
     }
     
     func fetchData() {
@@ -38,7 +38,7 @@ class ListViewController: UIViewController {
         do {
             let fetchData = try WeatherEntryModel.fetchAll(from: appDelegate.persistentContainer.viewContext)
             availableWeatherData = fetchData
-            collectionView.reloadData()
+            tableView.reloadData()
         } catch {
             MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to fetch weather data: \(error)", actions: [
                 MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
@@ -49,70 +49,54 @@ class ListViewController: UIViewController {
     }
 
     
-    func setupCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        collectionView.register(UINib(nibName: "WeatherCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "weatherCell")
-        collectionView.register(AddPhotoCell.self, forCellWithReuseIdentifier: "AddPhotoCell")
+    func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+    
+        tableView.register(UINib(nibName: "WeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "weatherCell")
     }
-
+    
+    
+    @IBAction func addButtonAction(_ sender: Any) {
+        let addWeatherVC = AddWeatherDataViewController()
+        navigationController?.pushViewController(addWeatherVC, animated: true)
+    }
+    
 }
 
-extension ListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        availableWeatherData.count
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return availableWeatherData.isEmpty ? 1 : availableWeatherData.count + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if availableWeatherData.isEmpty {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPhotoCell", for: indexPath) as! AddPhotoCell
-            return cell
-        } else {
-            if indexPath.row == availableWeatherData.count {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPhotoCell", for: indexPath) as! AddPhotoCell
-                return cell
-            } else {
-                let weatherData = availableWeatherData[indexPath.row]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as! WeatherCollectionViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let weatherData = availableWeatherData[indexPath.row]
+        let defaultImage = UIImage(systemName: "photo")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
+        
+        let now = Date()
 
-                let defaultImage = UIImage(systemName: "photo")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
-                cell.setupCell(
-                    image: weatherData.images.first ?? defaultImage!,
-                    city: weatherData.city,
-                    temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0)
-                )
-                return cell
+        func indexOfClosestDate(to targetDate: Date, in dates: [Date]) -> Int {
+            guard let index = dates.enumerated().min(by: {
+                abs($0.element.timeIntervalSince(targetDate)) < abs($1.element.timeIntervalSince(targetDate))
+            })?.offset else {
+                print("No valid time found.")
+                return 0
             }
+            return index
         }
+        
+        let condition = ConditionType.from(weatherCode: weatherData.weatherData.hourly.weatherCode[indexOfClosestDate(to: now, in: weatherData.weatherData.hourly.time)])
+        cell.setupCell(image: weatherData.images.first ?? defaultImage!, location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
+        
+        return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if availableWeatherData.isEmpty || indexPath.row == availableWeatherData.count {
-            let addWeatherVC = AddWeatherDataViewController()
-            navigationController?.pushViewController(addWeatherVC, animated: true)
-        } else {
-            let selectedWeather = availableWeatherData[indexPath.row]
-            print("Selected weather: \(selectedWeather.city)")
-        }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
-
+    
 }
