@@ -242,9 +242,19 @@ extension AddWeatherDataViewController: GrowingTextViewDelegate {
 
 extension AddWeatherDataViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Allow downward scrolling for pull-to-refresh
-        if scrollView.contentOffset.y > 0 {
-            scrollView.contentOffset.y = 0
+        // Convert submitButton's frame to scrollView's coordinate space
+        guard let submitButton = self.submitButton else { return }
+        let buttonMaxY = scrollView.convert(submitButton.frame, from: submitButton.superview).maxY
+        
+        // Get visible height of scrollView
+        let visibleHeight = scrollView.bounds.height
+
+        // Calculate maximum offset so the bottom of the button is just visible
+        let maxOffsetY = buttonMaxY - visibleHeight + 20
+
+        // Restrict scrolling beyond the bottom of the button
+        if scrollView.contentOffset.y > maxOffsetY {
+            scrollView.contentOffset.y = maxOffsetY
         }
     }
 }
