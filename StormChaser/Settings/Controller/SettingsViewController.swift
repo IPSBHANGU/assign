@@ -16,10 +16,9 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var userNameLable: UILabel!
     @IBOutlet weak var userEmailLabel: UILabel!
-    @IBOutlet weak var appThemeContainer: UIView!
-    @IBOutlet weak var appThemeLabel: UILabel!
-    @IBOutlet weak var logOutContainer: UIView!
-    @IBOutlet weak var logOutLabel: UILabel!
+    @IBOutlet weak var darkModeSwitch: CustomSwitch!
+    @IBOutlet weak var logoutContainer: UIView!
+    @IBOutlet weak var logoutLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,37 +26,38 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupUI()
         setupUserInfo()
-        setupButton()
     }
     
     func setupUI() {
-        settingsTitleLabel.font = UIFont(name: "Rubik-SemiBold", size: 18)
-        userAvatar.layer.cornerRadius = 16
+        settingsTitleLabel.font = UIFont(name: "Rubik-SemiBold", size: 32)
+        userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
         userAvatar.layer.masksToBounds = true
+        userAvatar.contentMode = .scaleToFill
         userNameLable.font = UIFont(name: "Rubik-SemiBold", size: 18)
         userEmailLabel.font = UIFont(name: "Rubik-Light", size: 16)
-        appThemeLabel.font = UIFont(name: "Rubik-Regular", size: 16)
-        appThemeLabel.text = "App Theme"
-        logOutLabel.textColor = .red
-        logOutLabel.text = "Log Out"
-        logOutLabel.font = UIFont(name: "Rubik-SemiBold", size: 16)
+        logoutContainer.layer.cornerRadius = 10
+        logoutContainer.layer.masksToBounds = true
+        logoutContainer.backgroundColor = UIColorHex().hexStringToUIColor(hex: "#991B1E")
+        logoutLabel.font = UIFont(name: "Rubik-SemiBold", size: 18)
+        logoutLabel.textColor = .white
+        setupSwitch()
     }
 
+    func setupSwitch() {
+        darkModeSwitch.title = "Dark Mode"
+        darkModeSwitch.font = UIFont(name: "Rubik-Regular", size: 18)
+        darkModeSwitch.onTintColor = .systemBlue
+        darkModeSwitch.thumbTintColor = .white
+        darkModeSwitch.delegate = self
+        logoutContainer.gestureRecognizers = [UITapGestureRecognizer(target: self, action: #selector(logoutButtonAction))]
+    }
+    
     func setupUserInfo() {
         if let user = Auth.auth().currentUser {
             userNameLable.text = user.displayName
             userEmailLabel.text = user.email
             userAvatar.kf.setImage(with: user.photoURL)
         }
-    }
-    
-    func setupButton() {
-        appThemeContainer.gestureRecognizers = [UITapGestureRecognizer(target: self, action: #selector(appThemeButtonAction))]
-        logOutContainer.gestureRecognizers = [UITapGestureRecognizer(target: self, action: #selector(logoutButtonAction))]
-    }
-
-    @objc func appThemeButtonAction() {
-        showThemeSelector()
     }
     
     @objc func logoutButtonAction() {
@@ -80,22 +80,6 @@ class SettingsViewController: UIViewController {
         })])
     }
     
-    func showThemeSelector() {
-        let systemAction = MaterialAlertAction(title: "System Default", titleColor: .label, backgroundColor: .systemBackground) {
-            self.applyTheme(.unspecified)
-        }
-
-        let lightAction = MaterialAlertAction(title: "Light", titleColor: .label, backgroundColor: .systemBackground) {
-            self.applyTheme(.light)
-        }
-        
-        let darkAction = MaterialAlertAction(title: "Dark", titleColor: .label, backgroundColor: .systemBackground) {
-            self.applyTheme(.dark)
-        }
-        
-        MatrialAlertView().showAlert(viewController: self, title: "Choose App Theme", message: "Select a preferred appearance for the app.", actions: [systemAction, lightAction, darkAction])
-    }
-    
     func applyTheme(_ style: UIUserInterfaceStyle) {
         UserDefaults.standard.set(style.rawValue, forKey: "selectedTheme")
         
@@ -108,4 +92,14 @@ class SettingsViewController: UIViewController {
         }
     }
 
+}
+
+extension SettingsViewController: CustomSwitchDelegate {
+    func customSwitchDidChange(_ customSwitch: CustomSwitch, isOn: Bool) {
+        if isOn {
+            self.applyTheme(.dark)
+        } else {
+            self.applyTheme(.light)
+        }
+    }
 }
