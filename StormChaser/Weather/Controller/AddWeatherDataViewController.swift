@@ -93,6 +93,7 @@ class AddWeatherDataViewController: UIViewController {
         noteTextView.layer.borderWidth = 1
         noteTextView.layer.borderColor = UIColorHex().hexStringToUIColor(hex: "#C5C6CC").cgColor
         noteTextView.delegate = self
+        noteTextView.returnKeyType = .done
     }
     
     @objc private func refreshPulled() {
@@ -240,6 +241,14 @@ extension AddWeatherDataViewController: GrowingTextViewDelegate {
        UIView.animate(withDuration: 0.2) {
            self.view.layoutIfNeeded()
        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 }
 
