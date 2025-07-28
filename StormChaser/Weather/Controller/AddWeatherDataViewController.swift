@@ -243,9 +243,9 @@ extension AddWeatherDataViewController: GrowingTextViewDelegate {
 extension AddWeatherDataViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Allow downward scrolling for pull-to-refresh
-        if scrollView.contentOffset.y > 0 {
-            scrollView.contentOffset.y = 0
-        }
+//        if scrollView.contentOffset.y > 0 {
+//            scrollView.contentOffset.y = 0
+//        }
     }
 }
 

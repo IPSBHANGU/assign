@@ -41,5 +41,7 @@
 	</dict>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>The app will use the location data</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires access to the camera to capture images of the weather for reporting and analysis.</string>
 </dict>
 </plist>
