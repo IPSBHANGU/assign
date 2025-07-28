@@ -132,7 +132,7 @@ class AddWeatherDataViewController: UIViewController {
             city: "Chandigarh",
             weatherData: weatherData,
             images: images,
-            summary: "Cloudy with some showers"
+            summary: noteTextView.text ?? ""
         )
         
         do {

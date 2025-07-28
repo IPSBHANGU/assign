@@ -125,7 +125,7 @@ extension PhotoGalleryViewController: UICollectionViewDataSource, UICollectionVi
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
 
         let picker = UIImagePickerController()
-        picker.sourceType = .camera
+        picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true)
     }
