@@ -24,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1VI-HS-o29">
-                            <rect key="frame" x="20" y="112" width="20" height="20"/>
+                            <rect key="frame" x="20" y="62" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="0ZB-wM-KeR"/>
                                 <constraint firstAttribute="width" constant="20" id="Ljz-fI-FAH"/>
@@ -37,17 +37,17 @@
                             </connections>
                         </button>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IX8-5U-v8A">
-                            <rect key="frame" x="20" y="150" width="353" height="682"/>
+                            <rect key="frame" x="20" y="100" width="353" height="732"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="IX8-5U-v8A" firstAttribute="leading" secondItem="PfZ-Zi-sPS" secondAttribute="leading" constant="20" id="3Dq-uT-QEC"/>
-                        <constraint firstItem="IX8-5U-v8A" firstAttribute="top" secondItem="PfZ-Zi-sPS" secondAttribute="top" constant="150" id="5M7-px-y2s"/>
+                        <constraint firstItem="IX8-5U-v8A" firstAttribute="top" secondItem="PfZ-Zi-sPS" secondAttribute="top" constant="100" id="5M7-px-y2s"/>
                         <constraint firstItem="1VI-HS-o29" firstAttribute="leading" secondItem="PfZ-Zi-sPS" secondAttribute="leading" constant="20" id="6Jk-vG-aWd"/>
                         <constraint firstAttribute="bottom" secondItem="IX8-5U-v8A" secondAttribute="bottom" constant="20" id="A43-bH-cXP"/>
                         <constraint firstAttribute="trailing" secondItem="IX8-5U-v8A" secondAttribute="trailing" constant="20" id="KvZ-1r-U7g"/>
-                        <constraint firstItem="1VI-HS-o29" firstAttribute="top" secondItem="PfZ-Zi-sPS" secondAttribute="top" constant="112" id="R78-Se-93M"/>
+                        <constraint firstItem="1VI-HS-o29" firstAttribute="top" secondItem="PfZ-Zi-sPS" secondAttribute="top" constant="62" id="R78-Se-93M"/>
                     </constraints>
                 </view>
             </subviews>

@@ -55,6 +55,8 @@ class AddWeatherDataViewController: UIViewController {
         titleLabel.font = UIFont(name: "Rubik-SemiBold", size: 20)
         submitButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 15)
         submitButton.setTitle("+ Add Weather Data", for: .normal)
+        submitButton.layer.cornerRadius = 12
+        submitButton.layer.masksToBounds = true
     }
     
     func setupLocationManager() {
@@ -86,15 +88,15 @@ class AddWeatherDataViewController: UIViewController {
     func setupTextView() {
         noteTextView.maxLength = 140
         noteTextView.trimWhiteSpaceWhenEndEditing = false
-        noteTextView.placeholder = "Add a note..."
+        noteTextView.placeholder = "  Add a note..."
         noteTextView.placeholderColor = UIColorHex().hexStringToUIColor(hex: "#C5C6CC")
-        noteTextView.minHeight = 25.0
+        noteTextView.minHeight = 48
         noteTextView.maxHeight = 270.0
-        noteTextView.backgroundColor = .systemBackground
-        noteTextView.layer.cornerRadius = 8
+        noteTextView.backgroundColor = UIColorHex().hexStringToUIColor(hex: "#E6F4EA")
+        noteTextView.layer.cornerRadius = 12
         noteTextView.layer.masksToBounds = true
         noteTextView.layer.borderWidth = 1
-        noteTextView.layer.borderColor = UIColorHex().hexStringToUIColor(hex: "#C5C6CC").cgColor
+        noteTextView.layer.borderColor = UIColorHex().hexStringToUIColor(hex: "#E6F4EA").cgColor
         noteTextView.delegate = self
         noteTextView.returnKeyType = .done
     }
