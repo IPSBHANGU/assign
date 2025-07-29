@@ -22,6 +22,9 @@ class ListWeatherViewController: UIViewController {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     var weatherData:WeatherEntryModel?
     
     override func viewDidLoad() {
@@ -48,6 +51,7 @@ class ListWeatherViewController: UIViewController {
         summaryLabel.font = UIFont(name: "Rubik-Regular", size: 20)
         mapView.layer.cornerRadius = 16
         mapView.clipsToBounds = true
+        scrollView.delegate = self
     }
     
     func setupData() {
@@ -89,5 +93,24 @@ class ListWeatherViewController: UIViewController {
             return 0
         }
         return index
+    }
+}
+
+extension ListWeatherViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Convert submitButton's frame to scrollView's coordinate space
+        guard let submitButton = self.mapView else { return }
+        let buttonMaxY = scrollView.convert(submitButton.frame, from: submitButton.superview).maxY
+        
+        // Get visible height of scrollView
+        let visibleHeight = scrollView.bounds.height
+
+        // Calculate maximum offset so the bottom of the button is just visible
+        let maxOffsetY = buttonMaxY - visibleHeight + 50
+
+        // Restrict scrolling beyond the bottom of the button
+        if scrollView.contentOffset.y > maxOffsetY {
+            scrollView.contentOffset.y = maxOffsetY
+        }
     }
 }

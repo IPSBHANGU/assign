@@ -15,6 +15,7 @@
                 <outlet property="coordinateLabel" destination="14u-8s-CSp" id="9pK-wr-AfF"/>
                 <outlet property="mapView" destination="TzY-Qp-ung" id="EcI-6J-Sdn"/>
                 <outlet property="notesLabel" destination="gds-Rr-QYK" id="qGu-wQ-9jM"/>
+                <outlet property="scrollView" destination="fbv-ih-LcB" id="j5w-5N-TO2"/>
                 <outlet property="summaryLabel" destination="nmx-DJ-qTk" id="MKw-6S-rgN"/>
                 <outlet property="temperatureLabel" destination="AeY-hb-a7b" id="ybt-Hq-vYl"/>
                 <outlet property="titleLable" destination="wVm-an-vlF" id="TQT-eo-Cjl"/>
