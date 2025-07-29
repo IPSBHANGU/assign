@@ -89,10 +89,10 @@ class AddWeatherDataViewController: UIViewController {
         noteTextView.maxLength = 140
         noteTextView.trimWhiteSpaceWhenEndEditing = false
         noteTextView.placeholder = "  Add a note..."
-        noteTextView.placeholderColor = UIColorHex().hexStringToUIColor(hex: "#C5C6CC")
+        noteTextView.placeholderColor = .placeholderText
         noteTextView.minHeight = 48
         noteTextView.maxHeight = 270.0
-        noteTextView.backgroundColor = UIColorHex().hexStringToUIColor(hex: "#E6F4EA")
+        noteTextView.backgroundColor = .tertiarySystemGroupedBackground
         noteTextView.layer.cornerRadius = 12
         noteTextView.layer.masksToBounds = true
         noteTextView.layer.borderWidth = 1

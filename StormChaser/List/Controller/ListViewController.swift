@@ -52,18 +52,30 @@ class ListViewController: UIViewController {
         let loadingOverlay = LoadingOverlayView(on: self)
         loadingOverlay.start()
         
-        FirebaseModel().fetchAllWeatherEntries { entries, error in
-            if error != nil {
-                loadingOverlay.stop()
-                self.fetchDataFromCoreData()
-            } else {
-                guard let entries = entries else {
-                    self.fetchDataFromCoreData()
-                    return
+        NetworkMonitor.shared.isInternetAvailable { (isOnline) in
+            if isOnline {
+                DispatchQueue.main.async {
+                    FirebaseModel().fetchAllWeatherEntries { entries, error in
+                        if error != nil {
+                            loadingOverlay.stop()
+                            self.fetchDataFromCoreData()
+                        } else {
+                            guard let entries = entries else {
+                                self.fetchDataFromCoreData()
+                                return
+                            }
+                            loadingOverlay.stop()
+                            self.availableWeatherData.removeAll()
+                            self.availableWeatherData = entries
+                            self.tableView.reloadData()
+                        }
+                    }
                 }
-                loadingOverlay.stop()
-                self.availableWeatherData = entries
-                self.tableView.reloadData()
+            } else {
+                DispatchQueue.main.async {
+                    loadingOverlay.stop()
+                    self.fetchDataFromCoreData()
+                }
             }
         }
     }
@@ -76,14 +88,20 @@ class ListViewController: UIViewController {
     
     
     @IBAction func addButtonAction(_ sender: Any) {
-        if NetworkMonitor.shared.isInternetAvailable() {
-            let addWeatherVC = AddWeatherDataViewController()
-            navigationController?.pushViewController(addWeatherVC, animated: true)
-        } else {
-            // Handle error
-            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
-                MatrialAlertView().dismissAlert()
-            })])
+        NetworkMonitor.shared.isInternetAvailable { (isOnline) in
+            if !isOnline {
+                // Handle error
+                DispatchQueue.main.async {
+                    MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
+                        MatrialAlertView().dismissAlert()
+                    })])
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let addWeatherVC = AddWeatherDataViewController()
+                    self.navigationController?.pushViewController(addWeatherVC, animated: true)
+                }
+            }
         }
     }
     

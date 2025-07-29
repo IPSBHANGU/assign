@@ -30,24 +30,18 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func googleSignInAction(_ sender: Any) {
-        if NetworkMonitor.shared.isInternetAvailable() {
-            // Call your actual Google Sign-In logic here
-            GoogleAuth().signIN(viewController: self) { isSucceeded, data, error in
-                if isSucceeded {
-                    // Navigate to next ViewController
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    // Handle error
-                    MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Sign-in failed: \(error ?? "Unknown error")", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
-                        MatrialAlertView().dismissAlert()
-                    })])
-                }
-                
+        // Call your actual Google Sign-In logic here
+        GoogleAuth().signIN(viewController: self) { isSucceeded, data, error in
+            if isSucceeded {
+                // Navigate to next ViewController
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                // Handle error
+                MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Sign-in failed: \(error ?? "Unknown error")", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
+                    MatrialAlertView().dismissAlert()
+                })])
             }
-        } else {
-            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
-                MatrialAlertView().dismissAlert()
-            })])
+            
         }
     }
     

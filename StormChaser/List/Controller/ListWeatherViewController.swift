@@ -62,20 +62,26 @@ class ListWeatherViewController: UIViewController {
         mapView.clipsToBounds = true
         scrollView.delegate = self
         deleteButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 18)
-        if NetworkMonitor.shared.isInternetAvailable() {
-            mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomMap)))
-        } else {
-            mapView.isHidden = true
-            let noInternetLabel: UILabel = {
-                let label = UILabel()
-                label.text = "Connect to Internet for MapView"
-                label.textColor = .placeholderText
-                label.textAlignment = .center
-                label.font = UIFont(name: "Rubik-SemiBold", size: 20)
-                return label
-            }()
-            scrollView.addSubview(noInternetLabel)
-            noInternetLabel.frame = mapView.frame
+        NetworkMonitor.shared.isInternetAvailable { (isOnline) in
+            if isOnline {
+                DispatchQueue.main.async {
+                    self.mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.zoomMap)))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.mapView.isHidden = true
+                    let noInternetLabel: UILabel = {
+                        let label = UILabel()
+                        label.text = "Connect to Internet for MapView"
+                        label.textColor = .placeholderText
+                        label.textAlignment = .center
+                        label.font = UIFont(name: "Rubik-SemiBold", size: 20)
+                        return label
+                    }()
+                    self.scrollView.addSubview(noInternetLabel)
+                    noInternetLabel.frame = self.mapView.frame
+                }
+            }
         }
         if weatherData?.uid != Auth.auth().currentUser?.uid {
             deleteButton.removeFromSuperview()
@@ -108,9 +114,13 @@ class ListWeatherViewController: UIViewController {
         } else {
             summaryLabel.text = weatherData.summary
         }
-        if NetworkMonitor.shared.isInternetAvailable() {
-            mapView.addAnnotation(annotation)
-            mapView.setRegion(location, animated: true)
+        NetworkMonitor.shared.isInternetAvailable { (isOnline) in
+            if isOnline {
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotation(annotation)
+                    self.mapView.setRegion(location, animated: true)
+                }
+            }
         }
     }
 
