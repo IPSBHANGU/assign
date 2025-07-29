@@ -62,7 +62,7 @@ class ListViewController: UIViewController {
             navigationController?.pushViewController(addWeatherVC, animated: true)
         } else {
             // Handle error
-            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .label, backgroundColor: .red, handler: {
+            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .white, backgroundColor: UIColorHex().hexStringToUIColor(hex: "#991B1E"), handler: {
                 MatrialAlertView().dismissAlert()
             })])
         }

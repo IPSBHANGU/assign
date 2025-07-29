@@ -15,14 +15,28 @@ struct MaterialAlertAction {
 }
 
 class MatrialAlertView: UIView {
-    
+
     private let alertContainerView = UIView()
     private let titleLabel = UILabel()
-    private let messageTextView = UITextView()
+    private let messageTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont(name: "Rubik-Regular", size: 16)
+        textView.textColor = .label
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.setContentHuggingPriority(.required, for: .vertical)
+        textView.setContentCompressionResistancePriority(.required, for: .vertical)
+        return textView
+    }()
+
     private let buttonsStackView = UIStackView()
-    
+
     private var actions: [MaterialAlertAction] = []
-    
+
     init() {
         super.init(frame: .zero)
     }
@@ -40,48 +54,33 @@ class MatrialAlertView: UIView {
     ) {
         setupView()
         setupConstraints()
-
+        
         titleLabel.text = title
-        if title == "Error" {
-            titleLabel.textColor = UIColorHex().hexStringToUIColor(hex: "#c80000")
-        } else {
-            titleLabel.textColor = alertColor
-        }
-
-        if message.isEmpty {
-            messageTextView.text = "❓"
-            messageTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40).isActive = true
-        } else {
-            messageTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
-            messageTextView.text = message
-        }
-
+        titleLabel.textColor = (title == "Error") ? UIColorHex().hexStringToUIColor(hex: "#991B1E") : alertColor
+        messageTextView.text = message.isEmpty ? "❓" : message
+        
         self.actions = actions
         buttonsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-
+        
         for (index, action) in actions.enumerated() {
             let button = UIButton(type: .system)
             button.setTitle(action.title, for: .normal)
             button.setTitleColor(action.titleColor ?? .white, for: .normal)
-            button.backgroundColor = action.backgroundColor ?? UIColorHex().hexStringToUIColor(hex: "#554d56")
+            button.backgroundColor = action.backgroundColor ?? .darkGray
             button.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 15)
             button.layer.cornerRadius = 8
-            button.tag = index
             button.heightAnchor.constraint(equalToConstant: 48).isActive = true
+            button.tag = index
             button.addTarget(self, action: #selector(actionButtonTapped(_:)), for: .touchUpInside)
-            button.layer.borderColor = UIColor.systemGray6.cgColor
-            button.layer.borderWidth = 1
             buttonsStackView.addArrangedSubview(button)
         }
-
-        adjustTextViewScroll(message: message)
-
+        
         self.alpha = 0
-        alertContainerView.transform = CGAffineTransform(scaleX: 0, y: 0)
-
+        alertContainerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        
         guard let targetView = viewController.view else { return }
         targetView.addSubview(self)
-
+        
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
@@ -89,8 +88,8 @@ class MatrialAlertView: UIView {
             self.topAnchor.constraint(equalTo: targetView.topAnchor),
             self.bottomAnchor.constraint(equalTo: targetView.bottomAnchor)
         ])
-
-        UIView.animate(withDuration: 0.4) {
+        
+        UIView.animate(withDuration: 0.3) {
             self.alpha = 1
             self.alertContainerView.transform = .identity
         }
@@ -98,32 +97,22 @@ class MatrialAlertView: UIView {
 
     private func setupView() {
         alertContainerView.backgroundColor = .systemBackground
-        alertContainerView.layer.cornerRadius = 12
-        alertContainerView.layer.borderWidth = 4
-        alertContainerView.layer.borderColor = UIColor.systemGray6.cgColor
-        alertContainerView.addShadow()
+        alertContainerView.layer.cornerRadius = 20
+        alertContainerView.layer.borderWidth = 1
+        alertContainerView.layer.borderColor = UIColor.systemGray5.cgColor
 
         titleLabel.font = UIFont(name: "Rubik-SemiBold", size: 20)
         titleLabel.textAlignment = .center
-        alertContainerView.addSubview(titleLabel)
+        titleLabel.numberOfLines = 0
 
-        messageTextView.font = UIFont(name: "Rubik-Regular", size: 15)
-        messageTextView.textAlignment = .center
-        messageTextView.isEditable = false
-        messageTextView.showsVerticalScrollIndicator = false
-        messageTextView.showsHorizontalScrollIndicator = false
-        messageTextView.isSelectable = false
-        messageTextView.textContainerInset = .zero
-        messageTextView.textContainer.lineFragmentPadding = 0
-        messageTextView.textColor = .label
-        messageTextView.backgroundColor = .clear
-        alertContainerView.addSubview(messageTextView)
+        messageTextView.borderStyle = .none
 
         buttonsStackView.axis = .vertical
         buttonsStackView.spacing = 12
-        buttonsStackView.distribution = .fillEqually
-        alertContainerView.addSubview(buttonsStackView)
 
+        alertContainerView.addSubview(titleLabel)
+        alertContainerView.addSubview(messageTextView)
+        alertContainerView.addSubview(buttonsStackView)
         self.addSubview(alertContainerView)
     }
 
@@ -133,38 +122,29 @@ class MatrialAlertView: UIView {
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        let messageTextViewHeightConstraint = messageTextView.heightAnchor.constraint(equalToConstant: 80)
-        messageTextViewHeightConstraint.priority = .defaultLow
+        let maxWidth = UIScreen.main.bounds.width * 0.85
+        let maxHeight = UIScreen.main.bounds.height * 0.85
 
         NSLayoutConstraint.activate([
             alertContainerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             alertContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            alertContainerView.widthAnchor.constraint(equalToConstant: 328),
-            alertContainerView.heightAnchor.constraint(lessThanOrEqualToConstant: 800),
+            alertContainerView.widthAnchor.constraint(equalToConstant: maxWidth),
+            alertContainerView.heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight),
 
-            titleLabel.topAnchor.constraint(equalTo: alertContainerView.topAnchor, constant: 26),
-            titleLabel.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -24),
+            titleLabel.topAnchor.constraint(equalTo: alertContainerView.topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -20),
 
-            messageTextView.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 24),
-            messageTextView.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -24),
-            messageTextViewHeightConstraint,
+            messageTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            messageTextView.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 20),
+            messageTextView.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -20),
+            messageTextView.heightAnchor.constraint(equalToConstant: 44),
 
-            buttonsStackView.topAnchor.constraint(equalTo: messageTextView.bottomAnchor, constant: 16),
-            buttonsStackView.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 24),
-            buttonsStackView.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -24),
-            buttonsStackView.bottomAnchor.constraint(equalTo: alertContainerView.bottomAnchor, constant: -16)
+            buttonsStackView.topAnchor.constraint(equalTo: messageTextView.bottomAnchor, constant: 20),
+            buttonsStackView.leadingAnchor.constraint(equalTo: alertContainerView.leadingAnchor, constant: 20),
+            buttonsStackView.trailingAnchor.constraint(equalTo: alertContainerView.trailingAnchor, constant: -20),
+            buttonsStackView.bottomAnchor.constraint(equalTo: alertContainerView.bottomAnchor, constant: -20)
         ])
-    }
-
-    private func adjustTextViewScroll(message: String) {
-        let maxAlertHeight: CGFloat = 800
-        let padding: CGFloat = 100 // estimated total height of title + buttons
-
-        let textViewWidth = alertContainerView.frame.width - 48
-        let textViewHeight = message.height(withConstrainedWidth: textViewWidth, font: messageTextView.font ?? UIFont.systemFont(ofSize: 15))
-
-        messageTextView.isScrollEnabled = (textViewHeight + padding) > maxAlertHeight
     }
 
     @objc private func actionButtonTapped(_ sender: UIButton) {
@@ -174,28 +154,11 @@ class MatrialAlertView: UIView {
     }
 
     func dismissAlert() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.alertContainerView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.alertContainerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             self.alpha = 0
         }) { _ in
             self.removeFromSuperview()
         }
-    }
-}
-
-extension UIView {
-    func addShadow() {
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.layer.shadowRadius = 4
-    }
-}
-
-extension String {
-    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-        return ceil(boundingBox.height)
     }
 }
