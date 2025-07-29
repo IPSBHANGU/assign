@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8231A90D2E390DC200A51DC5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8231A90C2E390DC200A51DC5 /* FirebaseStorage */; };
 		827649682E363C0A0028CE18 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 827649672E363C0A0028CE18 /* OpenMeteoSdk */; };
 		82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FC2E36129700DFD5A4 /* GoogleSignIn */; };
 		82F410FF2E36129700DFD5A4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 82F410FE2E36129700DFD5A4 /* GoogleSignInSwift */; };
@@ -52,6 +53,7 @@
 			files = (
 				82F411072E36130F00DFD5A4 /* FirebaseDatabase in Frameworks */,
 				82F410FD2E36129700DFD5A4 /* GoogleSignIn in Frameworks */,
+				8231A90D2E390DC200A51DC5 /* FirebaseStorage in Frameworks */,
 				827649682E363C0A0028CE18 /* OpenMeteoSdk in Frameworks */,
 				82F411092E36137A00DFD5A4 /* FirebaseAnalytics in Frameworks */,
 				82F411032E36130F00DFD5A4 /* FirebaseAuth in Frameworks */,
@@ -128,6 +130,7 @@
 				82F411062E36130F00DFD5A4 /* FirebaseDatabase */,
 				82F411082E36137A00DFD5A4 /* FirebaseAnalytics */,
 				827649672E363C0A0028CE18 /* OpenMeteoSdk */,
+				8231A90C2E390DC200A51DC5 /* FirebaseStorage */,
 			);
 			productName = StormChaser;
 			productReference = 82A184D92E3609280006410C /* StormChaser.app */;
@@ -469,6 +472,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8231A90C2E390DC200A51DC5 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F411002E3612EB00DFD5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		827649672E363C0A0028CE18 /* OpenMeteoSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 827649662E363C0A0028CE18 /* XCRemoteSwiftPackageReference "sdk" */;

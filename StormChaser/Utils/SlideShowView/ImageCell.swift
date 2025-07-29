@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ImageCell: UICollectionViewCell {
     var imageView: UIImageView!
@@ -27,5 +28,14 @@ class ImageCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         contentView.addSubview(imageView)
+    }
+    
+    func setupCellWithImage(image: UIImage){
+        imageView.image = image
+    }
+    
+    func setupCellWithImageURL(url: URL){
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(with: url)
     }
 }

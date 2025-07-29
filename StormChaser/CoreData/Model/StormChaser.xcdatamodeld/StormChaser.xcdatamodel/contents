@@ -8,6 +8,7 @@
         <attribute name="summary" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="uid" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="weatherData" optional="YES" attributeType="Binary"/>
     </entity>
 </model>

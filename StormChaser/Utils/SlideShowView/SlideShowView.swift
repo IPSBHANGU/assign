@@ -23,10 +23,34 @@ class SlideShowView: UIView {
         return label
     }()
     
-    var images: [UIImage] = [] {
+    private var imageObjects: [UIImage] = []
+    private var imageURLs: [String] = []
+    private var usingURLs: Bool = false
+    
+    var uiImages: [UIImage]? {
         didSet {
-            collectionView.reloadData()
-            noPhotosLabel.isHidden = !images.isEmpty
+            if let images = uiImages, !images.isEmpty {
+                imageObjects = images
+                usingURLs = false
+                reloadData()
+            } else if let urls = urlImages, !urls.isEmpty {
+                usingURLs = true
+                reloadData()
+            } else {
+                showNoPhotos()
+            }
+        }
+    }
+    
+    var urlImages: [String]? {
+        didSet {
+            if (uiImages == nil || uiImages?.isEmpty == true),
+               let urls = urlImages, !urls.isEmpty {
+                usingURLs = true
+                reloadData()
+            } else if (uiImages?.isEmpty ?? true) && (urlImages?.isEmpty ?? true) {
+                showNoPhotos()
+            }
         }
     }
     
@@ -59,6 +83,11 @@ class SlideShowView: UIView {
         addSubview(collectionView)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        collectionView.frame = self.bounds
+    }
+    
     private func setupNoPhotosLabel() {
         noPhotosLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(noPhotosLabel)
@@ -69,16 +98,43 @@ class SlideShowView: UIView {
         ])
     }
     
+    private func reloadData() {
+        noPhotosLabel.isHidden = true
+        collectionView.reloadData()
+    }
+    
+    private func showNoPhotos() {
+        imageObjects = []
+        imageURLs = []
+        usingURLs = false
+        collectionView.reloadData()
+        noPhotosLabel.isHidden = false
+    }
 }
 
 extension SlideShowView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return usingURLs ? (urlImages?.count ?? 0) : imageObjects.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        cell.imageView.image = images[indexPath.item]
+        
+        if usingURLs {
+            if let urls = urlImages, indexPath.item < urls.count,
+               let validURL = URL(string: urls[indexPath.item]) {
+                cell.setupCellWithImageURL(url: validURL)
+            } else {
+                showNoPhotos()
+            }
+        } else {
+            if indexPath.item < imageObjects.count {
+                cell.setupCellWithImage(image: imageObjects[indexPath.item])
+            } else {
+                showNoPhotos()
+            }
+        }
+        
         return cell
     }
     
@@ -86,4 +142,3 @@ extension SlideShowView: UICollectionViewDataSource, UICollectionViewDelegate, U
         return collectionView.frame.size
     }
 }
-

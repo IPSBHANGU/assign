@@ -143,24 +143,21 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmx-DJ-qTk">
-                                    <rect key="frame" x="20" y="487" width="72.666666666666671" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="6gL-i3-jh7"/>
-                                    </constraints>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmx-DJ-qTk">
+                                    <rect key="frame" x="20" y="487" width="353" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdL-DW-Ia3">
-                                    <rect key="frame" x="0.0" y="547" width="393" height="1"/>
+                                    <rect key="frame" x="0.0" y="527.33333333333337" width="393" height="1"/>
                                     <color key="backgroundColor" red="0.83137254901960778" green="0.83921568627450982" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="rNO-MY-iYs"/>
                                     </constraints>
                                 </view>
                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TzY-Qp-ung">
-                                    <rect key="frame" x="20" y="568" width="353" height="100"/>
+                                    <rect key="frame" x="20" y="548.33333333333337" width="353" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="jNx-Jg-4de"/>
                                     </constraints>
@@ -174,6 +171,7 @@
                                 <constraint firstItem="14u-8s-CSp" firstAttribute="leading" secondItem="Xxe-vl-xBv" secondAttribute="leading" constant="20" id="5rb-Mn-C9h"/>
                                 <constraint firstItem="zvx-W0-FdH" firstAttribute="top" secondItem="Xxe-vl-xBv" secondAttribute="top" constant="20" id="8ar-lR-70b"/>
                                 <constraint firstItem="nmx-DJ-qTk" firstAttribute="leading" secondItem="Xxe-vl-xBv" secondAttribute="leading" constant="20" id="93H-I1-b8w"/>
+                                <constraint firstAttribute="trailing" secondItem="nmx-DJ-qTk" secondAttribute="trailing" constant="20" id="BuC-YF-fgU"/>
                                 <constraint firstItem="gds-Rr-QYK" firstAttribute="leading" secondItem="Xxe-vl-xBv" secondAttribute="leading" constant="20" id="J68-C7-htF"/>
                                 <constraint firstAttribute="trailing" secondItem="zdL-DW-Ia3" secondAttribute="trailing" id="JDZ-oC-9G3"/>
                                 <constraint firstItem="z2v-LT-kTC" firstAttribute="top" secondItem="DHR-ad-4Yg" secondAttribute="bottom" constant="20" id="Jgd-bO-D4e"/>

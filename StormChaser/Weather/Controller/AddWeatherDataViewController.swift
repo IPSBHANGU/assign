@@ -145,30 +145,55 @@ class AddWeatherDataViewController: UIViewController {
     
     @IBAction func submitAction(_ sender: Any) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        // Show loading overlay
+        let loadingOverlay = LoadingOverlayView(on: self)
+        loadingOverlay.start()
+        
         guard let weatherData else {
+            loadingOverlay.stop()
             MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Please try again later.", actions: [MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
                 MatrialAlertView().dismissAlert()
             })])
             return
         }
+        let currentDate = Date()
+        let timestampString = String(currentDate.timeIntervalSince1970).replacingOccurrences(of: ".", with: "_")
+        guard let currentUID = Auth.auth().currentUser?.uid else {
+            loadingOverlay.stop()
+            return
+        }
+        
         let currentData = WeatherEntryModel(
-            timestamp: Date(),
+            timestamp: currentDate,
             latitude: 30.7333,
             longitude: 76.7794,
             city: "Chandigarh",
             weatherData: weatherData,
             images: images,
             summary: noteTextView.text ?? "",
-            uid: Auth.auth().currentUser?.uid ?? ""
+            uid: currentUID,
+            uuid: currentUID + "_" + timestampString
         )
         
-        do {
-            try currentData.save(to: appDelegate.persistentContainer.viewContext)
-            self.navigationController?.popViewController(animated: true)
-        } catch {
-            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to save entry: \(error)", actions: [MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
-                MatrialAlertView().dismissAlert()
-            })])
+        FirebaseModel().saveWeatherData(weatherData: currentData) { error in
+            if let error = error {
+                loadingOverlay.stop()
+                MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to save entry: \(error)", actions: [MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
+                    MatrialAlertView().dismissAlert()
+                })])
+            } else  {
+                do {
+                    loadingOverlay.stop()
+                    try currentData.save(to: appDelegate.persistentContainer.viewContext)
+                    self.navigationController?.popViewController(animated: true)
+                } catch {
+                    loadingOverlay.stop()
+                    MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to save entry: \(error)", actions: [MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
+                        MatrialAlertView().dismissAlert()
+                    })])
+                }
+            }
         }
     }
     

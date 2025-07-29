@@ -38,8 +38,16 @@ class WeatherTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupCell(image:UIImage, location:String, weatherCondition:String, temperature:String) {
+    func setupCellWithImage(image:UIImage, location:String, weatherCondition:String, temperature:String) {
         weatherImageView.image = image
+        locationLabel.text = location
+        weatherConditionLabel.text = weatherCondition
+        temperatureLabel.text = temperature
+    }
+    
+    func setupCellWithURL(imageURL:URL?, location:String, weatherCondition:String, temperature:String) {
+        weatherImageView.kf.indicatorType = .activity
+        weatherImageView.kf.setImage(with: imageURL)
         locationLabel.text = location
         weatherConditionLabel.text = weatherCondition
         temperatureLabel.text = temperature

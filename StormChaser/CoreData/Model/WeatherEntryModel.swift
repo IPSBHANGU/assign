@@ -15,9 +15,11 @@ struct WeatherEntryModel {
     let longitude: Double
     let city: String
     let weatherData: WeatherData
-    let images: [UIImage]
+    let images: [UIImage]?
     let summary: String
     let uid: String
+    let uuid: String
+    var imageURLs: [String]?
 
     // MARK: - Save to CoreData
     func save(to context: NSManagedObjectContext) throws {
@@ -28,14 +30,19 @@ struct WeatherEntryModel {
         entry.city = city
         entry.summary = summary
         entry.uid = uid
+        entry.uuid = uuid
 
         // Encode WeatherData
         let weatherDataEncoded = try JSONEncoder().encode(weatherData)
         entry.weatherData = weatherDataEncoded
 
         // Encode [UIImage] to Data
-        let imageDataArray = images.compactMap { $0.pngData() }
-        entry.images = try NSKeyedArchiver.archivedData(withRootObject: imageDataArray, requiringSecureCoding: false)
+        if let images = images, !images.isEmpty {
+            let imageDataArray = images.compactMap { $0.pngData() }
+            entry.images = try NSKeyedArchiver.archivedData(withRootObject: imageDataArray, requiringSecureCoding: false)
+        } else {
+            entry.images = nil
+        }
 
         try context.save()
     }
@@ -61,7 +68,8 @@ struct WeatherEntryModel {
             weatherData: weatherDataDecoded,
             images: imageArray,
             summary: object.summary ?? "",
-            uid: object.uid ?? ""
+            uid: object.uid ?? "",
+            uuid: object.uuid ?? ""
         )
     }
     

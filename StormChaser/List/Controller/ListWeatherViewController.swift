@@ -100,7 +100,8 @@ class ListWeatherViewController: UIViewController {
         coordinateLabel.text = "\(weatherData.latitude) , \(weatherData.longitude)"
         weatherConditionLabel.text = condition.description().description
         temperatureLabel.text = String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m[indexOfClosestDate(to: weatherData.timestamp, in: weatherData.weatherData.hourly.time)])
-        userClickedImageSlideShow.images = weatherData.images
+        userClickedImageSlideShow.uiImages = weatherData.images
+        userClickedImageSlideShow.urlImages = weatherData.imageURLs
         if weatherData.summary == "" {
             summaryLabel.text = "No notes available"
         } else {
@@ -121,16 +122,34 @@ class ListWeatherViewController: UIViewController {
     @IBAction func deleteButtonAction(_ sender: Any) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let weatherData = weatherData else { return }
-        do {
-            try WeatherEntryModel.delete(weatherData, from: appDelegate.persistentContainer.viewContext)
-            self.tabBarController?.setTabBarHidden(false, animated: true)
-            self.navigationController?.popViewController(animated: true)
-        } catch {
-            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to delete weather data: \(error)", actions: [
-                MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
-                    MatrialAlertView().dismissAlert()
-                })
-            ])
+        
+        // Show loading overlay
+        let loadingOverlay = LoadingOverlayView(on: self)
+        loadingOverlay.start()
+        
+        FirebaseModel().deleteWeatherEntry(weatherData: weatherData) { error in
+            if let error = error {
+                loadingOverlay.stop()
+                MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to delete weather data: \(error)", actions: [
+                    MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
+                        MatrialAlertView().dismissAlert()
+                    })
+                ])
+            } else {
+                do {
+                    loadingOverlay.stop()
+                    try WeatherEntryModel.delete(weatherData, from: appDelegate.persistentContainer.viewContext)
+                    self.tabBarController?.setTabBarHidden(false, animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                } catch {
+                    loadingOverlay.stop()
+                    MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to delete weather data: \(error)", actions: [
+                        MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
+                            MatrialAlertView().dismissAlert()
+                        })
+                    ])
+                }
+            }
         }
     }
     

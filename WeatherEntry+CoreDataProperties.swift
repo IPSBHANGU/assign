@@ -24,5 +24,6 @@ extension WeatherEntry {
     @NSManaged public var timestamp: Date?
     @NSManaged public var weatherData: Data?
     @NSManaged public var uid: String?
+    @NSManaged public var uuid: String?
 
 }

@@ -32,7 +32,7 @@ class ListViewController: UIViewController {
        titleLabel.font = UIFont(name: "Rubik-SemiBold", size: 32)
     }
     
-    func fetchData() {
+    func fetchDataFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
         do {
@@ -48,6 +48,25 @@ class ListViewController: UIViewController {
         }
     }
 
+    func fetchData() {
+        let loadingOverlay = LoadingOverlayView(on: self)
+        loadingOverlay.start()
+        
+        FirebaseModel().fetchAllWeatherEntries { entries, error in
+            if error != nil {
+                loadingOverlay.stop()
+                self.fetchDataFromCoreData()
+            } else {
+                guard let entries = entries else {
+                    self.fetchDataFromCoreData()
+                    return
+                }
+                loadingOverlay.stop()
+                self.availableWeatherData = entries
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     func setupTableView() {
         tableView.dataSource = self
@@ -96,7 +115,14 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let condition = ConditionType.from(weatherCode: weatherData.weatherData.hourly.weatherCode[indexOfClosestDate(to: now, in: weatherData.weatherData.hourly.time)])
-        cell.setupCell(image: weatherData.images.first ?? defaultImage!, location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
+        
+        if let urls = weatherData.imageURLs, !urls.isEmpty {
+            cell.setupCellWithURL(imageURL: URL(string: urls.first ?? ""), location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
+        } else if let imgs = weatherData.images, !imgs.isEmpty {
+            cell.setupCellWithImage(image: weatherData.images?.first ?? defaultImage!, location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
+        } else {
+            cell.setupCellWithImage(image: weatherData.images?.first ?? defaultImage!, location: weatherData.city, weatherCondition: condition.description().description, temperature: String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m.first ?? 0.0))
+        }
         
         cell.selectionStyle = .none
         return cell
