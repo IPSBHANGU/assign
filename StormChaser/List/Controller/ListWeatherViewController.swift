@@ -34,8 +34,13 @@ class ListWeatherViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.tabBarController?.setTabBarHidden(true, animated: true)
-        setupUI()
         setupData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupUI()
     }
 
     func setupUI() {
@@ -55,7 +60,21 @@ class ListWeatherViewController: UIViewController {
         mapView.clipsToBounds = true
         scrollView.delegate = self
         deleteButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 18)
-        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomMap)))
+        if NetworkMonitor.shared.isInternetAvailable() {
+            mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomMap)))
+        } else {
+            mapView.isHidden = true
+            let noInternetLabel: UILabel = {
+                let label = UILabel()
+                label.text = "Connect to Internet for MapView"
+                label.textColor = .placeholderText
+                label.textAlignment = .center
+                label.font = UIFont(name: "Rubik-SemiBold", size: 20)
+                return label
+            }()
+            scrollView.addSubview(noInternetLabel)
+            noInternetLabel.frame = mapView.frame
+        }
     }
     
     func setupData() {
@@ -83,8 +102,10 @@ class ListWeatherViewController: UIViewController {
         } else {
             summaryLabel.text = weatherData.summary
         }
-        mapView.addAnnotation(annotation)
-        mapView.setRegion(location, animated: true)
+        if NetworkMonitor.shared.isInternetAvailable() {
+            mapView.addAnnotation(annotation)
+            mapView.setRegion(location, animated: true)
+        }
     }
 
 

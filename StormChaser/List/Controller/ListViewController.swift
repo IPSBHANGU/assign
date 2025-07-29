@@ -57,8 +57,15 @@ class ListViewController: UIViewController {
     
     
     @IBAction func addButtonAction(_ sender: Any) {
-        let addWeatherVC = AddWeatherDataViewController()
-        navigationController?.pushViewController(addWeatherVC, animated: true)
+        if NetworkMonitor.shared.isInternetAvailable() {
+            let addWeatherVC = AddWeatherDataViewController()
+            navigationController?.pushViewController(addWeatherVC, animated: true)
+        } else {
+            // Handle error
+            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .label, backgroundColor: .red, handler: {
+                MatrialAlertView().dismissAlert()
+            })])
+        }
     }
     
 }

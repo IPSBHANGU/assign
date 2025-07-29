@@ -30,18 +30,24 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func googleSignInAction(_ sender: Any) {
-        // Call your actual Google Sign-In logic here
-        GoogleAuth().signIN(viewController: self) { isSucceeded, data, error in
-            if isSucceeded {
-                // Navigate to next ViewController
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                // Handle error
-                MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Sign-in failed: \(error ?? "Unknown error")", actions: [MaterialAlertAction(title: "Okay", titleColor: .label, backgroundColor: .red, handler: {
-                    MatrialAlertView().dismissAlert()
-                })])
+        if NetworkMonitor.shared.isInternetAvailable() {
+            // Call your actual Google Sign-In logic here
+            GoogleAuth().signIN(viewController: self) { isSucceeded, data, error in
+                if isSucceeded {
+                    // Navigate to next ViewController
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    // Handle error
+                    MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Sign-in failed: \(error ?? "Unknown error")", actions: [MaterialAlertAction(title: "Okay", titleColor: .label, backgroundColor: .red, handler: {
+                        MatrialAlertView().dismissAlert()
+                    })])
+                }
+                
             }
-            
+        } else {
+            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "No internet connection", actions: [MaterialAlertAction(title: "Okay", titleColor: .label, backgroundColor: .red, handler: {
+                MatrialAlertView().dismissAlert()
+            })])
         }
     }
     
