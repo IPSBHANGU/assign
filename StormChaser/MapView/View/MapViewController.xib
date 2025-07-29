@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,9 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="StormChaser" customModuleProvider="target">
             <connections>
-                <outlet property="addButton" destination="FtN-ix-E4X" id="xOG-hw-imy"/>
-                <outlet property="mapView" destination="z5S-XW-IbI" id="kF1-yI-IWK"/>
-                <outlet property="settingsButton" destination="LWw-4Y-ABZ" id="Mnr-gF-ZLg"/>
+                <outlet property="backButton" destination="OG3-U0-RAS" id="iTr-dN-HgQ"/>
+                <outlet property="backgroundView" destination="VbW-FU-AWc" id="aM0-kh-Uj3"/>
+                <outlet property="mapView" destination="z5S-XW-IbI" id="hLH-yg-XUm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,60 +22,56 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5S-XW-IbI">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VbW-FU-AWc">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                    <standardMapConfiguration key="preferredConfiguration"/>
-                </mapView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LWw-4Y-ABZ">
-                    <rect key="frame" x="333" y="59" width="50" height="50"/>
+                    <subviews>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5S-XW-IbI">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <standardMapConfiguration key="preferredConfiguration"/>
+                        </mapView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OG3-U0-RAS">
+                            <rect key="frame" x="20" y="62" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="KQU-Il-AMK"/>
+                                <constraint firstAttribute="height" constant="20" id="cTi-yr-atp"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                            <connections>
+                                <action selector="backButtonAction:" destination="-1" eventType="touchUpInside" id="ljn-4T-fQg"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="1gP-jr-KlR"/>
-                        <constraint firstAttribute="height" constant="50" id="aEM-if-nK6"/>
+                        <constraint firstItem="OG3-U0-RAS" firstAttribute="leading" secondItem="VbW-FU-AWc" secondAttribute="leading" constant="20" id="6lO-Rc-8DD"/>
+                        <constraint firstItem="z5S-XW-IbI" firstAttribute="leading" secondItem="VbW-FU-AWc" secondAttribute="leading" id="EIn-dJ-ntd"/>
+                        <constraint firstAttribute="bottom" secondItem="z5S-XW-IbI" secondAttribute="bottom" id="PGH-QU-EoJ"/>
+                        <constraint firstAttribute="trailing" secondItem="z5S-XW-IbI" secondAttribute="trailing" id="X1K-xH-XEQ"/>
+                        <constraint firstItem="OG3-U0-RAS" firstAttribute="top" secondItem="VbW-FU-AWc" secondAttribute="top" constant="62" id="iLf-MA-55J"/>
+                        <constraint firstItem="z5S-XW-IbI" firstAttribute="top" secondItem="VbW-FU-AWc" secondAttribute="top" id="ue4-pc-zsL"/>
                     </constraints>
-                    <color key="tintColor" systemColor="labelColor"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="gearshape" catalog="system"/>
-                    <connections>
-                        <action selector="handleSettingsAction:" destination="-1" eventType="touchUpInside" id="kqb-6i-rQs"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FtN-ix-E4X">
-                    <rect key="frame" x="287" y="59" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="3TZ-Fe-mqR"/>
-                        <constraint firstAttribute="width" constant="50" id="erH-5d-uks"/>
-                    </constraints>
-                    <color key="tintColor" systemColor="labelColor"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="plus" catalog="system"/>
-                    <connections>
-                        <action selector="handleAddAction:" destination="-1" eventType="touchUpInside" id="UoJ-F6-DqE"/>
-                    </connections>
-                </button>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="z5S-XW-IbI" secondAttribute="trailing" id="Cda-rP-Nee"/>
-                <constraint firstItem="FtN-ix-E4X" firstAttribute="top" secondItem="LWw-4Y-ABZ" secondAttribute="top" id="Gzi-b5-fDZ"/>
-                <constraint firstItem="z5S-XW-IbI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="IQS-hG-Ab5"/>
-                <constraint firstItem="LWw-4Y-ABZ" firstAttribute="leading" secondItem="FtN-ix-E4X" secondAttribute="trailing" constant="-4" id="X4d-8i-Nq4"/>
-                <constraint firstItem="LWw-4Y-ABZ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-10" id="YZN-DB-RLQ"/>
-                <constraint firstAttribute="bottom" secondItem="z5S-XW-IbI" secondAttribute="bottom" id="cbQ-qw-0jk"/>
-                <constraint firstItem="z5S-XW-IbI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="h2r-6M-sCK"/>
-                <constraint firstItem="LWw-4Y-ABZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="i2N-wO-nzR"/>
+                <constraint firstItem="VbW-FU-AWc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="JQV-OW-ss7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VbW-FU-AWc" secondAttribute="trailing" id="Tbj-iD-Klz"/>
+                <constraint firstAttribute="bottom" secondItem="VbW-FU-AWc" secondAttribute="bottom" id="bFa-3A-i0S"/>
+                <constraint firstItem="VbW-FU-AWc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ilU-3q-Vej"/>
             </constraints>
             <point key="canvasLocation" x="61.832061068702288" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
-        <image name="gearshape" catalog="system" width="128" height="123"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

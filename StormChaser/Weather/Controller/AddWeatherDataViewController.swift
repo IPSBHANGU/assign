@@ -60,6 +60,8 @@ class AddWeatherDataViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        checkLocationAuthorization()
     }
     
     private func setupRefreshControl() {
@@ -94,6 +96,28 @@ class AddWeatherDataViewController: UIViewController {
         noteTextView.layer.borderColor = UIColorHex().hexStringToUIColor(hex: "#C5C6CC").cgColor
         noteTextView.delegate = self
         noteTextView.returnKeyType = .done
+    }
+    
+    func checkLocationAuthorization() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+        case .restricted, .denied:
+            let openSettingsAction = MaterialAlertAction(title: "Open Settings", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1")) {
+                if let appSettings = URL(string: UIApplication.openSettingsURLString),
+                   UIApplication.shared.canOpenURL(appSettings) {
+                    UIApplication.shared.open(appSettings)
+                }
+            }
+            MatrialAlertView().showAlert(viewController: self, title: "Location Access Needed", message: "Please enable location access in Settings to use this feature.", actions: [openSettingsAction])
+            
+        @unknown default:
+            break
+        }
     }
     
     @objc private func refreshPulled() {

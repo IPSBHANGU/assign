@@ -55,6 +55,7 @@ class ListWeatherViewController: UIViewController {
         mapView.clipsToBounds = true
         scrollView.delegate = self
         deleteButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 18)
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomMap)))
     }
     
     func setupData() {
@@ -106,6 +107,15 @@ class ListWeatherViewController: UIViewController {
                 })
             ])
         }
+    }
+    
+    @objc func zoomMap() {
+        guard let weatherData = weatherData else { return }
+        let mapViewController = MapViewController()
+        mapViewController.startFrame = self.mapView.frame
+        mapViewController.coordinates = CLLocationCoordinate2D(latitude: weatherData.latitude, longitude: weatherData.longitude)
+        mapViewController.modalPresentationStyle = .overFullScreen
+        present(mapViewController, animated: false, completion: nil)
     }
     
     func indexOfClosestDate(to targetDate: Date, in dates: [Date]) -> Int {
