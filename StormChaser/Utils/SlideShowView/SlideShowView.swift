@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SlideShowViewDelegate: AnyObject {
+    func didSelect(_ isURL: Bool, didSelectItemAt indexPath: IndexPath)
+}
+
 class SlideShowView: UIView {
     
     var collectionView: UICollectionView!
@@ -26,6 +30,8 @@ class SlideShowView: UIView {
     private var imageObjects: [UIImage] = []
     private var imageURLs: [String] = []
     private var usingURLs: Bool = false
+    
+    weak var delegate: SlideShowViewDelegate?
     
     var uiImages: [UIImage]? {
         didSet {
@@ -140,5 +146,9 @@ extension SlideShowView: UICollectionViewDataSource, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelect(usingURLs, didSelectItemAt: indexPath)
     }
 }

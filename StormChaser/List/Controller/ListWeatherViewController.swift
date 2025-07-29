@@ -55,6 +55,7 @@ class ListWeatherViewController: UIViewController {
         temperatureLabel.textColor = .secondaryLabel
         userClickedImageSlideShow.layer.cornerRadius = 16
         userClickedImageSlideShow.clipsToBounds = true
+        userClickedImageSlideShow.delegate = self
         notesLabel.font = UIFont(name: "Rubik-SemiBold", size: 20)
         summaryLabel.font = UIFont(name: "Rubik-Regular", size: 20)
         mapView.layer.cornerRadius = 16
@@ -189,5 +190,22 @@ extension ListWeatherViewController : UIScrollViewDelegate {
         if scrollView.contentOffset.y > maxOffsetY {
             scrollView.contentOffset.y = maxOffsetY
         }
+    }
+}
+
+extension ListWeatherViewController: SlideShowViewDelegate {
+    func didSelect(_ isURL: Bool, didSelectItemAt indexPath: IndexPath) {
+        print(isURL, indexPath.row)
+        let imageVC = ImageViewController()
+        if let urls = weatherData?.imageURLs, !urls.isEmpty {
+            imageVC.useURL = true
+            imageVC.imageURL = URL(string: urls[indexPath.row])
+        } else if let imgs = weatherData?.images, !imgs.isEmpty {
+            imageVC.useURL = false
+            imageVC.image = imgs[indexPath.row]
+        }
+        imageVC.startFrame = self.userClickedImageSlideShow.frame
+        imageVC.modalPresentationStyle = .overFullScreen
+        self.present(imageVC, animated: false)
     }
 }
