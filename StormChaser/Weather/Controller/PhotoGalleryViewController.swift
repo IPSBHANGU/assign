@@ -63,6 +63,19 @@ class PhotoGalleryViewController: UIViewController {
             titleLabel.centerXAnchor.constraint(equalTo: navigationBarView.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: navigationBarView.centerYAnchor)
         ])
+
+        let doneButton = UIButton(type: .system)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitleColor(.label, for: .normal)
+        doneButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 16)
+        doneButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+        navigationBarView.addSubview(doneButton)
+
+        NSLayoutConstraint.activate([
+            doneButton.trailingAnchor.constraint(equalTo: navigationBarView.trailingAnchor, constant: -16),
+            doneButton.centerYAnchor.constraint(equalTo: navigationBarView.centerYAnchor)
+        ])
     }
     
     private func setupCollectionView() {
