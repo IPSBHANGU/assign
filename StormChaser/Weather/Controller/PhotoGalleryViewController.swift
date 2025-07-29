@@ -129,16 +129,43 @@ extension PhotoGalleryViewController: UICollectionViewDataSource, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == images.count {
-            openCamera()
+            openPicker()
         } else {
             let image = images[indexPath.item]
             presentFullScreenImage(image)
         }
     }
+    
+    func openPicker() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
+            self?.openCamera()
+        }
+        
+        let choosePhotoAction = UIAlertAction(title: "Choose Photo", style: .default) { [weak self] _ in
+            self?.openPhotoPicker()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(takePhotoAction)
+        alertController.addAction(choosePhotoAction)
+        
+        present(alertController, animated: true)
+    }
 
     func openCamera() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
 
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func openPhotoPicker() {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
