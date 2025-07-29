@@ -108,6 +108,8 @@ extension PhotoGalleryViewController: UICollectionViewDataSource, UICollectionVi
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
             cell.imageView.image = images[indexPath.item]
+            cell.setTag(indexPath.item)
+            cell.delegate = self
             return cell
         }
     }
@@ -146,5 +148,12 @@ extension PhotoGalleryViewController: UIImagePickerControllerDelegate, UINavigat
             images.append(image)
             collectionView.reloadData()
         }
+    }
+}
+
+extension PhotoGalleryViewController: PhotoCellDelegate {
+    func photoCellDidTapDelete(_ index: Int) {
+        images.remove(at: index)
+        collectionView.reloadData()
     }
 }
