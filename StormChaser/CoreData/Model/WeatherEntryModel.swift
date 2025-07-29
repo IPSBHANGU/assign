@@ -17,6 +17,7 @@ struct WeatherEntryModel {
     let weatherData: WeatherData
     let images: [UIImage]
     let summary: String
+    let uid: String
 
     // MARK: - Save to CoreData
     func save(to context: NSManagedObjectContext) throws {
@@ -26,6 +27,7 @@ struct WeatherEntryModel {
         entry.longitude = longitude
         entry.city = city
         entry.summary = summary
+        entry.uid = uid
 
         // Encode WeatherData
         let weatherDataEncoded = try JSONEncoder().encode(weatherData)
@@ -58,7 +60,8 @@ struct WeatherEntryModel {
             city: object.city ?? "",
             weatherData: weatherDataDecoded,
             images: imageArray,
-            summary: object.summary ?? ""
+            summary: object.summary ?? "",
+            uid: object.uid ?? ""
         )
     }
     

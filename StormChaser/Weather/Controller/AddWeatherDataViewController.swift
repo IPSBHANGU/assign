@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import CoreLocation
 import GrowingTextView
+import FirebaseAuth
 
 class AddWeatherDataViewController: UIViewController {
 
@@ -157,7 +158,8 @@ class AddWeatherDataViewController: UIViewController {
             city: "Chandigarh",
             weatherData: weatherData,
             images: images,
-            summary: noteTextView.text ?? ""
+            summary: noteTextView.text ?? "",
+            uid: Auth.auth().currentUser?.uid ?? ""
         )
         
         do {
