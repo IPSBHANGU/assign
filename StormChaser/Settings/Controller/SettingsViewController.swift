@@ -50,6 +50,7 @@ class SettingsViewController: UIViewController {
         darkModeSwitch.thumbTintColor = .white
         darkModeSwitch.delegate = self
         logoutContainer.gestureRecognizers = [UITapGestureRecognizer(target: self, action: #selector(logoutButtonAction))]
+        darkModeSwitch.isOn = getTheme()
     }
     
     func setupUserInfo() {
@@ -79,6 +80,23 @@ class SettingsViewController: UIViewController {
             MatrialAlertView().dismissAlert()
         })])
     }
+    
+    func getTheme() -> Bool {
+        if let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+            
+            let style = window.traitCollection.userInterfaceStyle
+            if style == .dark {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        return false
+    }
+
     
     func applyTheme(_ style: UIUserInterfaceStyle) {
         UserDefaults.standard.set(style.rawValue, forKey: "selectedTheme")
