@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class ListWeatherViewController: UIViewController {
 
@@ -21,6 +22,7 @@ class ListWeatherViewController: UIViewController {
     @IBOutlet weak var notesLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var deleteButton: UIButton!
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -52,6 +54,7 @@ class ListWeatherViewController: UIViewController {
         mapView.layer.cornerRadius = 16
         mapView.clipsToBounds = true
         scrollView.delegate = self
+        deleteButton.titleLabel?.font = UIFont(name: "Rubik-SemiBold", size: 18)
     }
     
     func setupData() {
@@ -74,7 +77,11 @@ class ListWeatherViewController: UIViewController {
         weatherConditionLabel.text = condition.description().description
         temperatureLabel.text = String(format: "%.1f°C", weatherData.weatherData.hourly.temperature2m[indexOfClosestDate(to: weatherData.timestamp, in: weatherData.weatherData.hourly.time)])
         userClickedImageSlideShow.images = weatherData.images
-        summaryLabel.text = weatherData.summary
+        if weatherData.summary == "" {
+            summaryLabel.text = "No notes available"
+        } else {
+            summaryLabel.text = weatherData.summary
+        }
         mapView.addAnnotation(annotation)
         mapView.setRegion(location, animated: true)
     }
@@ -84,7 +91,23 @@ class ListWeatherViewController: UIViewController {
         self.tabBarController?.setTabBarHidden(false, animated: true)
         self.navigationController?.popViewController(animated: true)
     }
-
+    
+    @IBAction func deleteButtonAction(_ sender: Any) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        guard let weatherData = weatherData else { return }
+        do {
+            try WeatherEntryModel.delete(weatherData, from: appDelegate.persistentContainer.viewContext)
+            self.tabBarController?.setTabBarHidden(false, animated: true)
+            self.navigationController?.popViewController(animated: true)
+        } catch {
+            MatrialAlertView().showAlert(viewController: self, title: "Error", message: "Failed to delete weather data: \(error)", actions: [
+                MaterialAlertAction(title: "Okay", titleColor: UIColorHex().hexStringToUIColor(hex: "#554d56"), backgroundColor: UIColorHex().hexStringToUIColor(hex: "#c1bec1"), handler: {
+                    MatrialAlertView().dismissAlert()
+                })
+            ])
+        }
+    }
+    
     func indexOfClosestDate(to targetDate: Date, in dates: [Date]) -> Int {
         guard let index = dates.enumerated().min(by: {
             abs($0.element.timeIntervalSince(targetDate)) < abs($1.element.timeIntervalSince(targetDate))

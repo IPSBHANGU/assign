@@ -61,5 +61,16 @@ struct WeatherEntryModel {
             summary: object.summary ?? ""
         )
     }
+    
+    static func delete(_ model: WeatherEntryModel, from context: NSManagedObjectContext) throws {
+        let fetchRequest: NSFetchRequest<WeatherEntry> = WeatherEntry.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "timestamp == %@", model.timestamp as CVarArg)
+        fetchRequest.fetchLimit = 1
+
+        if let objectToDelete = try context.fetch(fetchRequest).first {
+            context.delete(objectToDelete)
+            try context.save()
+        }
+    }
 }
 

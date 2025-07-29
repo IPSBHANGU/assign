@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="cityLabel" destination="zvx-W0-FdH" id="kTS-u3-oZh"/>
                 <outlet property="coordinateLabel" destination="14u-8s-CSp" id="9pK-wr-AfF"/>
+                <outlet property="deleteButton" destination="aVA-A0-1At" id="HwZ-kw-yLp"/>
                 <outlet property="mapView" destination="TzY-Qp-ung" id="EcI-6J-Sdn"/>
                 <outlet property="notesLabel" destination="gds-Rr-QYK" id="qGu-wQ-9jM"/>
                 <outlet property="scrollView" destination="fbv-ih-LcB" id="j5w-5N-TO2"/>
@@ -52,14 +53,25 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVA-A0-1At">
+                            <rect key="frame" x="309.66666666666669" y="55" width="73.333333333333314" height="35"/>
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Delete"/>
+                            <connections>
+                                <action selector="deleteButtonAction:" destination="-1" eventType="touchUpInside" id="jN3-5d-KQN"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="wVm-an-vlF" firstAttribute="leading" secondItem="fmI-dz-J3y" secondAttribute="trailing" constant="60" id="2Yb-hh-kEy"/>
                         <constraint firstItem="fmI-dz-J3y" firstAttribute="leading" secondItem="SNl-7f-MyR" secondAttribute="leading" constant="20" id="Otg-Gz-jgw"/>
                         <constraint firstItem="fmI-dz-J3y" firstAttribute="top" secondItem="SNl-7f-MyR" secondAttribute="top" constant="62" id="XKd-6s-Jx9"/>
+                        <constraint firstItem="aVA-A0-1At" firstAttribute="top" secondItem="SNl-7f-MyR" secondAttribute="top" constant="55" id="cVe-v0-qkN"/>
                         <constraint firstAttribute="trailing" secondItem="wVm-an-vlF" secondAttribute="trailing" constant="100" id="gWE-9h-rjv"/>
                         <constraint firstAttribute="height" constant="100" id="gfG-4Z-rhv"/>
+                        <constraint firstAttribute="trailing" secondItem="aVA-A0-1At" secondAttribute="trailing" constant="10" id="jEF-md-dLM"/>
                         <constraint firstItem="wVm-an-vlF" firstAttribute="top" secondItem="SNl-7f-MyR" secondAttribute="top" constant="62" id="mum-AJ-qhR"/>
                     </constraints>
                 </view>
@@ -220,6 +232,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
