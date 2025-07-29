@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     
     func setupUI() {
         settingsTitleLabel.font = UIFont(name: "Rubik-SemiBold", size: 32)
-        userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
+        userAvatar.layer.cornerRadius = userAvatar.frame.width / 2 - 2
         userAvatar.layer.masksToBounds = true
         userAvatar.contentMode = .scaleToFill
         userNameLable.font = UIFont(name: "Rubik-SemiBold", size: 18)
