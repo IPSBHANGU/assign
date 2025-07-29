@@ -12,9 +12,21 @@ class SlideShowView: UIView {
     var collectionView: UICollectionView!
     private var timer: Timer?
     private var currentIndex: Int = 0
+    
+    private let noPhotosLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No Photos"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
     var images: [UIImage] = [] {
         didSet {
             collectionView.reloadData()
+            noPhotosLabel.isHidden = !images.isEmpty
         }
     }
     
@@ -23,11 +35,13 @@ class SlideShowView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
+        setupNoPhotosLabel()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupCollectionView()
+        setupNoPhotosLabel()
     }
     
     private func setupCollectionView() {
@@ -43,6 +57,16 @@ class SlideShowView: UIView {
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         
         addSubview(collectionView)
+    }
+    
+    private func setupNoPhotosLabel() {
+        noPhotosLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(noPhotosLabel)
+        
+        NSLayoutConstraint.activate([
+            noPhotosLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noPhotosLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
 }
