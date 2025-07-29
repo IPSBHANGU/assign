@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreData
+import FirebaseAuth
 
 class ListWeatherViewController: UIViewController {
 
@@ -74,6 +75,9 @@ class ListWeatherViewController: UIViewController {
             }()
             scrollView.addSubview(noInternetLabel)
             noInternetLabel.frame = mapView.frame
+        }
+        if weatherData?.uid != Auth.auth().currentUser?.uid {
+            deleteButton.removeFromSuperview()
         }
     }
     
